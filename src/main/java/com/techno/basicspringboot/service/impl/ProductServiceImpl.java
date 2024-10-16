@@ -62,6 +62,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String delete(Long id) {
-        return "TODO";
+        productRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+        productRepository.deleteById(id);
+        return "Product deleted successfully";
     }
 }

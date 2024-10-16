@@ -26,4 +26,6 @@ Content-Type: application/json
   "quantity": 10
 }
 
+### DELETE PRODUCT
+DELETE http://localhost:8000/v1/products/2
 
