@@ -1,11 +1,11 @@
 package com.techno.basicspringboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techno.basicspringboot.dto.AuditingDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +18,10 @@ public class Category extends AuditingDto {
 
 
     private boolean isDeleted = false;
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Product> products;
+
+
 }

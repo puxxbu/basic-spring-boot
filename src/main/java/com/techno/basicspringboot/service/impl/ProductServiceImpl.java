@@ -1,9 +1,12 @@
 package com.techno.basicspringboot.service.impl;
 
 import com.techno.basicspringboot.dto.BaseResponseDto;
+import com.techno.basicspringboot.dto.request.ProductRequestDto;
 import com.techno.basicspringboot.dto.response.ProductResponseDto;
+import com.techno.basicspringboot.entity.Category;
 import com.techno.basicspringboot.entity.Product;
 import com.techno.basicspringboot.exception.ProductNotFoundException;
+import com.techno.basicspringboot.repository.CategoryRepository;
 import com.techno.basicspringboot.repository.ProductRepository;
 import com.techno.basicspringboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     public ProductResponseDto getOneProduct(Long id) {
@@ -73,6 +79,8 @@ public class ProductServiceImpl implements ProductService {
            HashMap<String, Object> data = new HashMap<>();
            List<Product> products = productRepository.findAllProduct();
 
+
+
            if(!products.isEmpty()){
                for(Product product : products){
                    ProductResponseDto productResponseDto = new ProductResponseDto();
@@ -98,11 +106,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public BaseResponseDto save(Product product) {
+    public BaseResponseDto save(ProductRequestDto product) {
         try {
-            productRepository.save(product);
+            Category category = categoryRepository.findById(product.getCategoryId()).orElseThrow(
+                    () -> new ProductNotFoundException("category with id " + product.getCategoryId() + "notfound")
+            );
+
+            Product newProduct = new Product();
+
+            newProduct.setName(product.getName());
+            newProduct.setPrice(product.getPrice());
+            newProduct.setQuantity(product.getQuantity());
+            newProduct.setCategory(category);
+
+            productRepository.save(newProduct);
             Map<String, Object> data = new HashMap<>();
-            data.put("product", product);
+            data.put("product", newProduct);
             return BaseResponseDto.builder()
                     .status(HttpStatus.CREATED)
                     .description("Product saved successfully")

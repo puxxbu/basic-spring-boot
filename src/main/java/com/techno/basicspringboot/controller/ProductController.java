@@ -2,6 +2,7 @@ package com.techno.basicspringboot.controller;
 
 
 import com.techno.basicspringboot.dto.BaseResponseDto;
+import com.techno.basicspringboot.dto.request.ProductRequestDto;
 import com.techno.basicspringboot.entity.Product;
 import com.techno.basicspringboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> save(@RequestBody Product product){
+    public ResponseEntity<BaseResponseDto> save(@RequestBody ProductRequestDto product){
         BaseResponseDto response = productService.save(product);
         return new ResponseEntity<>(response, response.getStatus());
     }

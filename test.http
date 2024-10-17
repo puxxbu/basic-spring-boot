@@ -8,7 +8,8 @@ Content-Type: application/json
 {
   "name": "Product 233",
   "price": 1000,
-  "quantity": 10
+  "quantity": 10,
+  "categoryId": 1
 }
 
 ### GET ALL PRODUCT
@@ -40,7 +41,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "categoryName": "jos"
+  "categoryName": "mahal"
 }
 
 ### GET ALL CATEGORY
