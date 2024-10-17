@@ -1,7 +1,7 @@
-GET http://localhost:8000/v1/products/2
+GET {{baseUrl}}/v1/products/2
 
 ### POST USER
-POST http://localhost:8000/v1/products
+POST {{baseUrl}}/v1/products
 Accept: application/json
 Content-Type: application/json
 
@@ -12,11 +12,11 @@ Content-Type: application/json
 }
 
 ### GET ALL PRODUCT
-GET http://localhost:8000/v1/products
+GET {{baseUrl}}/v1/products
 
 ### PUT PRODUCT
 
-PUT http://localhost:8000/v1/products/2
+PUT {{baseUrl}}/v1/products/2
 Accept: application/json
 Content-Type: application/json
 
@@ -27,7 +27,36 @@ Content-Type: application/json
 }
 
 ### DELETE PRODUCT
-DELETE http://localhost:8000/v1/products/23333
+DELETE {{baseUrl}}/v1/products/23333
 
 ### SOFT DELETE
-DELETE http://localhost:8000/v1/products/1/soft
+DELETE {{baseUrl}}/v1/products/1/soft
+
+
+
+### POST CATEGORY
+POST {{baseUrl}}/v1/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+  "categoryName": "jos"
+}
+
+### GET ALL CATEGORY
+GET {{baseUrl}}/v1/categories
+
+### PUT CATEGORY
+PUT {{baseUrl}}/v1/categories/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "categoryName": "barang ghoib"
+}
+
+### SOFT DELETE CATEGORY
+DELETE {{baseUrl}}/v1/categories/1/soft
+
+### DELETE CATEGORY
+DELETE {{baseUrl}}/v1/categories/1
