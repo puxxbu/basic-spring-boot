@@ -74,35 +74,34 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponseDto getAll() {
-       try {
-           List<ProductResponseDto> responseDtos = new ArrayList<>();
-           HashMap<String, Object> data = new HashMap<>();
-           List<Product> products = productRepository.findAllProduct();
+        try {
+            List<ProductResponseDto> responseDtos = new ArrayList<>();
+            HashMap<String, Object> data = new HashMap<>();
+            List<Product> products = productRepository.findAllProduct();
 
-
-
-           if(!products.isEmpty()){
-               for(Product product : products){
-                   ProductResponseDto productResponseDto = new ProductResponseDto();
-                   BeanUtils.copyProperties(product, productResponseDto);
-                   responseDtos.add(productResponseDto);
-               }
-               data.put("products", responseDtos);
-           }else{
-               throw new ProductNotFoundException("No product found");
-           }
-           return BaseResponseDto.builder()
-                   .status(HttpStatus.OK)
-                   .description("Products found")
-                   .data(data)
-                   .build();
-       } catch (ProductNotFoundException e) {
-           return BaseResponseDto.builder()
-                   .status(HttpStatus.NOT_FOUND)
-                   .description("No product found")
-                   .data(new HashMap<>())
-                   .build();
-       }
+            if (!products.isEmpty()) {
+                for (Product product : products) {
+                    ProductResponseDto productResponseDto = new ProductResponseDto();
+                    BeanUtils.copyProperties(product, productResponseDto);
+                    productResponseDto.setCategory(product.getCategory());
+                    responseDtos.add(productResponseDto);
+                }
+                data.put("products", responseDtos);
+            } else {
+                throw new ProductNotFoundException("No product found");
+            }
+            return BaseResponseDto.builder()
+                    .status(HttpStatus.OK)
+                    .description("Products found")
+                    .data(data)
+                    .build();
+        } catch (ProductNotFoundException e) {
+            return BaseResponseDto.builder()
+                    .status(HttpStatus.NOT_FOUND)
+                    .description("No product found")
+                    .data(new HashMap<>())
+                    .build();
+        }
     }
 
     @Override

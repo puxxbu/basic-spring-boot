@@ -20,7 +20,7 @@ public class Product extends AuditingDto {
     private boolean isDeleted = false;
 
 
-    @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = Category.class, optional = false)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 

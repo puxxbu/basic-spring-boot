@@ -1,4 +1,4 @@
-GET {{baseUrl}}/v1/products/2
+GET {{baseUrl}}/v1/products/1
 
 ### POST USER
 POST {{baseUrl}}/v1/products
