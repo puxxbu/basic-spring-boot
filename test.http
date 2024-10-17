@@ -1,4 +1,4 @@
-GET http://localhost:8000/v1/products/2
+GET http://localhost:8000/v1/products/525
 
 ### POST USER
 POST http://localhost:8000/v1/products
