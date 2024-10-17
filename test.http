@@ -1,4 +1,4 @@
-GET http://localhost:8000/v1/products/525
+GET http://localhost:8000/v1/products/2
 
 ### POST USER
 POST http://localhost:8000/v1/products
@@ -6,7 +6,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Product 2",
+  "name": "Product 233",
   "price": 1000,
   "quantity": 10
 }
@@ -27,5 +27,7 @@ Content-Type: application/json
 }
 
 ### DELETE PRODUCT
-DELETE http://localhost:8000/v1/products/2
+DELETE http://localhost:8000/v1/products/23333
 
+### SOFT DELETE
+DELETE http://localhost:8000/v1/products/1/soft

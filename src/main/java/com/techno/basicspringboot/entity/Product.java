@@ -16,5 +16,7 @@ public class Product extends AuditingDto {
     private String name;
     private double price;
     private int quantity;
+    @Column(nullable = true)
+    private boolean isDeleted = false;
 
 }

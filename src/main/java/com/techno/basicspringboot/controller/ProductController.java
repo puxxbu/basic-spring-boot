@@ -52,6 +52,12 @@ public class ProductController {
 
     }
 
+    @DeleteMapping("/{id}/soft")
+    public ResponseEntity<BaseResponseDto> softDelete(@PathVariable Long id){
+        BaseResponseDto response = productService.softDelete(id);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<String> delete(@PathVariable Long id){
 //        String response = productService.delete(id);

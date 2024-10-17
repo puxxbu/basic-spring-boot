@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.sql.Array;
@@ -27,18 +28,12 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductResponseDto getOneProduct(Long id) {
        ProductResponseDto productResponseDto = new ProductResponseDto();
+        Optional<Product> product = Optional.ofNullable(productRepository.findByIdAndIsDeletedFalse(id).orElseThrow(
+                () -> new ProductNotFoundException("product with id " + id + "notfound")
+        ));
 
-       try {
-           Optional<Product> product = Optional.ofNullable(productRepository.findById(id).orElseThrow(
-                   () -> new ProductNotFoundException("product with id " + id + "notfound")
-           ));
-
-           BeanUtils.copyProperties(product, productResponseDto);
-           return productResponseDto;
-
-       } catch (Exception e) {
-           throw new RuntimeException(e);
-       }
+        BeanUtils.copyProperties(product, productResponseDto);
+        return productResponseDto;
 
 
 
@@ -46,23 +41,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponseDto getOne(Long id) {
-        Map<String, Object> data = new HashMap<>();
-        ProductResponseDto productResponseDto = getOneProduct(id);
-        if(productResponseDto.getMessage() == null){
-            data.put("product", productResponseDto);
-            return BaseResponseDto.builder()
-                    .status(HttpStatus.OK)
-                    .description("Product found")
-                    .data(data)
-                    .build();
-        }else{
-            return BaseResponseDto.builder()
-                    .status(HttpStatus.NOT_FOUND)
-                    .description("Product not found")
-                    .data(data)
-                    .build();
-        }
+       try {
+           Map<String, Object> data = new HashMap<>();
+           ProductResponseDto productResponseDto = getOneProduct(id);
+           if(productResponseDto.getMessage() == null){
+               data.put("product", productResponseDto);
+               return BaseResponseDto.builder()
+                       .status(HttpStatus.OK)
+                       .description("Product found")
+                       .data(data)
+                       .build();
+           }else{
+               return BaseResponseDto.builder()
+                       .status(HttpStatus.NOT_FOUND)
+                       .description("Product not found")
+                       .data(data)
+                       .build();
+           }
 
+       } catch (Exception e) {
+           return BaseResponseDto.builder()
+                   .status(HttpStatus.NOT_FOUND)
+                   .description("Product not found")
+                   .data(new HashMap<>())
+                   .build();
+       }
 
     }
 
@@ -71,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
        try {
            List<ProductResponseDto> responseDtos = new ArrayList<>();
            HashMap<String, Object> data = new HashMap<>();
-           List<Product> products = productRepository.findAll();
+           List<Product> products = productRepository.findAllProduct();
 
            if(!products.isEmpty()){
                for(Product product : products){
@@ -151,6 +154,24 @@ public class ProductServiceImpl implements ProductService {
                     .build();
         } catch (ProductNotFoundException e) {
            return getOne(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public BaseResponseDto softDelete(Long id) {
+        try {
+            Map<String, Object> data = new HashMap<>();
+            ProductResponseDto productResponseDto = getOneProduct(id);
+            data.put("product" , productResponseDto);
+            productRepository.softDelete(id);
+            return  BaseResponseDto.builder()
+                    .status(HttpStatus.OK)
+                    .description("Product deleted successfully")
+                    .data(data)
+                    .build();
+        } catch (ProductNotFoundException e) {
+            return getOne(id);
         }
     }
 

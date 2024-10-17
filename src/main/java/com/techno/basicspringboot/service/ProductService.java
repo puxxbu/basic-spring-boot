@@ -13,4 +13,5 @@ public interface ProductService {
     BaseResponseDto save(Product product);
     BaseResponseDto update(Long id, Product product);
     BaseResponseDto delete(Long id);
+    BaseResponseDto softDelete(Long id);
 }
