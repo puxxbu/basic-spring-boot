@@ -61,3 +61,7 @@ DELETE {{baseUrl}}/v1/categories/1/soft
 
 ### DELETE CATEGORY
 DELETE {{baseUrl}}/v1/categories/1
+
+### POST GET FILE
+
+POST {{baseUrl}}/v1/files

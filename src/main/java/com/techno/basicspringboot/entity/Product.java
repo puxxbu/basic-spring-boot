@@ -11,11 +11,11 @@ public class Product extends AuditingDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
-    private double price;
-    private int quantity;
+    private Double price;
+    private Integer quantity;
     @Column(nullable = true)
     private boolean isDeleted = false;
 
