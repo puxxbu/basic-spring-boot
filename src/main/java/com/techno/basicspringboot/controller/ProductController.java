@@ -5,14 +5,17 @@ import com.techno.basicspringboot.dto.BaseResponseDto;
 import com.techno.basicspringboot.dto.request.ProductRequestDto;
 import com.techno.basicspringboot.entity.Product;
 import com.techno.basicspringboot.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/products")
@@ -28,7 +31,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> save(@RequestBody ProductRequestDto product){
+    public ResponseEntity<BaseResponseDto> save(@Valid @RequestBody ProductRequestDto product) {
+
         BaseResponseDto response = productService.save(product);
         return new ResponseEntity<>(response, response.getStatus());
     }

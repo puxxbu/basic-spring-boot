@@ -144,6 +144,7 @@ public class ProductServiceImpl implements ProductService {
             BeanUtils.copyProperties(product, productResponseDto);
             Map<String, Object> data = new HashMap<>();
             data.put("product", product);
+            productRepository.save(product);
             return BaseResponseDto.builder()
                     .status(HttpStatus.OK)
                     .description("Product updated successfully")

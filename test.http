@@ -6,7 +6,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Product 233",
+  "name": "",
   "price": 1000,
   "quantity": 10,
   "categoryId": 1
@@ -41,7 +41,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "categoryName": "mahal"
+  "categoryName": "mahal2"
 }
 
 ### GET ALL CATEGORY
@@ -65,3 +65,28 @@ DELETE {{baseUrl}}/v1/categories/1
 ### POST GET FILE
 
 POST {{baseUrl}}/v1/files
+
+### GET CLIENTS
+
+GET {{baseUrl}}/v1/clients/categories
+
+### POST CLIENT
+
+POST {{baseUrl}}/v1/clients/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+  "categoryName": "murah"
+}
+
+### PUT CLIENT
+PUT {{baseUrl}}/v1/clients/categories/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "categoryName": "barang ghoib"
+}
+
+### SOFT

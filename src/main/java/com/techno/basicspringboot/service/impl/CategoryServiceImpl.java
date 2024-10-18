@@ -126,6 +126,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryRepository.save(category);
             Map<String, Object> data = new HashMap<>();
             data.put("category", category);
+            categoryRepository.save(category);
             return BaseResponseDto.builder()
                     .status(HttpStatus.OK)
                     .description("Category updated successfully")
